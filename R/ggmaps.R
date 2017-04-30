@@ -4,7 +4,7 @@ library(ggmap)
 library(tidyverse)
 
 raw_catapult_data <- read.csv(file='data/killester_block_catapult.csv')
-sampled_catapult_data <- raw_catapult_data[seq(1,nrow(catapult_data),1000),]
+sampled_catapult_data <- raw_catapult_data[seq(1,nrow(raw_catapult_data),1000),]
 sampled_catapult_data <- sampled_catapult_data %>% mutate(km = (as.integer(Odometer / 1000) + 1))
 # Filter out just the first 5km
 sampled_catapult_data <-sampled_catapult_data %>% filter(km <= 5)
