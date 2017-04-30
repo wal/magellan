@@ -1,3 +1,5 @@
-Plot coordinates from GPS devices onto Google Maps using R
+Plot coordinates from GPS devices onto a map using R
 
-![Plot](docs/plot.png "Example Plot")
+e.g
+
+![Plot](docs/Rplot.png "Example Plot")
