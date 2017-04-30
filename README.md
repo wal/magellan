@@ -1,0 +1,1 @@
+Plot coordinates from GPS devices onto Google Maps using R
