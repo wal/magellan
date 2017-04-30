@@ -1,10 +1,14 @@
-install.packages("ggmap")
 library(ggmap)
 
-data = read.csv(file='data/coords.csv')
-midpoint <- nrow(data) / 2
+raw_catapult_data <- read.csv(file='data/killester_block_catapult.csv')
+sampled_catapult_data <- raw_catapult_data[seq(1,nrow(catapult_data),1000),]
 
-midpoint = data[midpoint,]
+# Calculate a midpoint to center the map around
+midpoint <- nrow(sampled_catapult_data) / 2
+midpoint = sampled_catapult_data[midpoint,]
 
-ggmap(get_map(location=c(lon = midpoint$lon, lat=midpoint$lat), zoom=15)) + 
-  geom_point(data=data, aes(x=lon, y=lat), color="red", size=2, alpha=0.5)
+# Get the map using the midpoint as location
+ggmap(get_map(location=c(lon = midpoint$Longitude, lat=midpoint$Latitude), zoom=15)) + 
+  # Plot the sampled points onto the map
+  geom_point(data=sampled_catapult_data, aes(x=Longitude, y=Latitude), color="red", size=2, alpha=0.5)
+
