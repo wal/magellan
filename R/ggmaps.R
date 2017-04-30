@@ -9,21 +9,25 @@ sampled_catapult_data <- sampled_catapult_data %>% mutate(km = (as.integer(Odome
 # Filter out just the first 5km
 sampled_catapult_data <-sampled_catapult_data %>% filter(km <= 5)
 
-
-
-
 # Summary of the filtered and mutated dataset
 precis(sampled_catapult_data)
 
-# Calculate a midpoint to center the map around
-midpoint <- nrow(sampled_catapult_data) / 2
-midpoint = sampled_catapult_data[midpoint,]
+
+# Calculate the center of the map from the mean lat/long
+center <- c(lon = mean(sampled_catapult_data$Longitude), 
+            lat = mean(sampled_catapult_data$Latitude))
 
 png("docs/Rplot.png")
 
 sampled_catapult_data$km <- as.factor(sampled_catapult_data$km)
 # Get the map using the midpoint as location
-ggmap(get_map(location=c(lon = midpoint$Longitude, lat=midpoint$Latitude), zoom=15)) + 
+map <-  get_map(
+  location=center, 
+  zoom=15,
+  source='google',
+  maptype='satellite')
+
+ggmap(map) + 
   # Plot the sampled points onto the map
   geom_point(data=sampled_catapult_data, aes(x=Longitude, y=Latitude, color = km), size=3) +
   scale_color_brewer(palette="Dark2")
