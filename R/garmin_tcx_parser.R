@@ -1,6 +1,6 @@
 source('R/common.R')
 library("xml2")
-tcx_document <- read_xml('data/howth_cliff_walk.tcx')
+tcx_document <- read_xml('data/liffey_run_03052017.tcx')
 trackpoints <- xml_find_all(tcx_document, './/d1:Trackpoint')
 
 data <- data.frame(time = character(), 
@@ -26,17 +26,18 @@ for(trackpoint in trackpoints) {
   
 # Summary of the filtered and mutated dataset
 precis(data)
-summary(data$time)
+
+saveRDS(data, file="data/liffey_run)03052017.rds")
 
 # Calculate the center of the map from the mean lat/long
 center <- c(lon = mean(data$longitude, na.rm=TRUE), 
             lat = mean(data$latitude, na.rm=TRUE))
 
-png("docs/Howth_Cliff_Walk_per_km.png")
+png("docs/liffey_run_km.png")
 # Get the map using the midpoint as location
 map <-  get_map(
   location=center, 
-  zoom=13)
+  zoom=14)
 
 ggmap(map) + 
   # Plot the sampled points onto the map
@@ -44,17 +45,17 @@ ggmap(map) +
 
 dev.off()
 
-png("docs/Howth_Cliff_Walk_per_altitude.png")
+png("docs/liffey_run_altitude.png")
 ggmap(map) + 
   # Plot the sampled points onto the map
   geom_point(data=data, aes(x=longitude, y=latitude, colour = altitude), size=2.5) +
   scale_colour_gradient(low = "green", high = "red")
 dev.off()
 
-png("docs/Howth_Cliff_Walk_per_distance_point.png")
+png("docs/liffey_run_per_distance_point.png")
 ggplot(data, aes(x=time)) + geom_point(aes(y=distance))
 dev.off()
 
-png("docs/Howth_Cliff_Walk_per_altitude_point.png")
+png("docs/liffey_run_per_altitude_point.png")
 ggplot(data, aes(x=time)) + geom_point(aes(y=altitude)) + geom_smooth(aes(y=altitude))
 dev.off()
