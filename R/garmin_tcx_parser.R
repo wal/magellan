@@ -27,7 +27,7 @@ for(trackpoint in trackpoints) {
 # Summary of the filtered and mutated dataset
 precis(data)
 
-saveRDS(data, file="data/liffey_run)03052017.rds")
+saveRDS(data, file="data/liffey_run_03052017.rds")
 
 # Calculate the center of the map from the mean lat/long
 center <- c(lon = mean(data$longitude, na.rm=TRUE), 
